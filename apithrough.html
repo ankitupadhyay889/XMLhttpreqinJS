@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> API </title>
+</head>
+<body>
+    <div id="container"></div>    
+</body>
+</html>
+
+<script>
+    const container = document.querySelector("#container");
+
+    const request = new XMLHttpRequest();
+    request.open('GET' , "https://restcountries.eu/rest/v2/name/nepal");
+    request.send();
+
+    // to get response
+    request.addEventListener('load' , function(){
+        // console.log(this.responseText);
+        const [data] = JSON.parse(this.responseText);
+        // console.log(data.capital);
+        const htmlData = `
+        <div>
+            <h1> ${data.name} </h1>
+            <p> capital : ${data.capital} </p>
+        </div>
+        <div> 
+            <h3> ${data.nativeName} </h3>
+            <p> Native Language </p> 
+        </div>
+        <div> 
+            <h3> ${data.population} </h3>
+            <p> Population </p> 
+        </div>
+        <div>
+            <h3> ${data.demonym} </h3>
+            <p> Demonym </p> 
+        </div> 
+        `;
+
+        container.insertAdjacentHTML('afterbegin' , htmlData)
+    })
+</script>
